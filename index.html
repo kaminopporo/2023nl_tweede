@@ -794,12 +794,6 @@
         var geojsonLayer;
         const municipalityLayers = new Map();
 
-        // --- fitBounds対策（初期読み込み後に戻す） ---
-        setTimeout(() => {
-            // 読み込み直後のfitBounds発火後に上書きする
-            map.setView(dcCoordinates, initialZoom);
-        }, 200);
-
         // データのカラム名。GeoJSONファイルのプロパティ名に合わせてください。
         const municipalityNameColumn = '自治体名';
         const districtCodeColumn = 'コード'; // 行政区域コード
@@ -1096,9 +1090,7 @@
                 }).addTo(map);
 
                 var bounds = geojsonLayer.getBounds();
-                if (bounds.isValid()) {
-                    map.fitBounds(bounds);
-                }
+
 
                 // 初期表示モードに基づいて地図を更新
                 updateMapStyle();
