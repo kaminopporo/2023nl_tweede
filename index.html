@@ -777,14 +777,15 @@
             zoomControl: false
         });
 
+        // --- タイルレイヤー ---
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution:
                 '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         }).addTo(map);
 
-        // --- デン・ハーグ周辺に固定 ---
-        const dcCoordinates = [52.08, 4.30];
+        // --- デン・ハーグ周辺に固定（初期表示のみ） ---
+        const dcCoordinates = [52.08, 4.30]; // デン・ハーグ中心
         const initialZoom = 11;
         map.setView(dcCoordinates, initialZoom);
 
@@ -793,10 +794,9 @@
         var geojsonLayer;
         const municipalityLayers = new Map();
 
-
-        // --- 自動でfitBoundsされても、強制的に元に戻す ---
-        // 少し遅延して再セット（fitBounds発火後に上書き）
+        // --- fitBounds対策（初期読み込み後に戻す） ---
         setTimeout(() => {
+            // 読み込み直後のfitBounds発火後に上書きする
             map.setView(dcCoordinates, initialZoom);
         }, 200);
 
